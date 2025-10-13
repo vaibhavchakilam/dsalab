@@ -1,0 +1,63 @@
+//23
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node {
+    int data;
+    struct Node* next;
+} Node;
+
+// Function to push an element onto the stack
+void push(Node** top, int data) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->next = *top;
+    *top = newNode;
+}
+
+// Function to pop an element from the stack
+int pop(Node** top) {
+    if (*top == NULL) {
+        printf("Stack underflow\n");
+        exit(1);
+    }
+    Node* temp = *top;
+    int data = temp->data;
+    *top = (*top)->next;
+    free(temp);
+    return data;
+}
+
+// Function to find the largest element in the stack
+int findMax(Node* top) {
+    if (top == NULL) {
+        printf("Stack is empty\n");
+        return -1;
+    }
+
+    int max = top->data;
+    Node* current = top;
+    
+    while (current != NULL) {
+        if (current->data > max) {
+            max = current->data;
+        }
+        current = current->next;
+    }
+    return max;
+}
+
+int main() {
+    Node* stack = NULL;
+    
+    // Example stack elements
+    push(&stack, 10);
+    push(&stack, 20);
+    push(&stack, 5);
+    push(&stack, 30);
+    push(&stack, 15);
+    
+    printf("The largest element in the stack is: %d\n", findMax(stack));
+
+    return 0;
+}
