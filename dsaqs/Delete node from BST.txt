@@ -1,0 +1,15 @@
+#17
+def bst_delete(root,key):
+    if not root: return None
+    if key<root.v: root.left=bst_delete(root.left,key)
+    elif key>root.v: root.right=bst_delete(root.right,key)
+    else:
+        if not root.left: return root.right
+        if not root.right: return root.left
+        succ=root.right
+        while succ.left: succ=succ.left
+        root.v,succ.v=succ.v,root.v
+        root.right=bst_delete(root.right,key)
+    return root
+# test
+r=bst_delete(r,3); preorder(r)

@@ -1,0 +1,28 @@
+#23
+class AVLNode:
+    def __init__(self,k): self.k,self.h,self.l,self.r=k,1,None,None
+def height(n): return n.h if n else 0
+def update(n): n.h=1+max(height(n.l),height(n.r)); return n
+def rotate_right(y):
+    x=y.l; T=x.r; x.r=y; y.l=T; update(y); return update(x)
+def rotate_left(x):
+    y=x.r; T=y.l; y.l=x; x.r=T; update(x); return update(y)
+def balance(n):
+    if not n: return n
+    update(n)
+    if height(n.l)-height(n.r)>1:
+        if height(n.l.r)>height(n.l.l): n.l=rotate_left(n.l)
+        return rotate_right(n)
+    if height(n.r)-height(n.l)>1:
+        if height(n.r.l)>height(n.r.r): n.r=rotate_right(n.r)
+        return rotate_left(n)
+    return n
+def avl_insert(n,k):
+    if not n: return AVLNode(k)
+    if k<n.k: n.l=avl_insert(n.l,k)
+    else: n.r=avl_insert(n.r,k)
+    return balance(n)
+# test
+root=None
+for x in [10,20,30,40,50,25]: root=avl_insert(root,x)
+print(root.k, height(root))

@@ -1,0 +1,16 @@
+#16
+class BSTNode:
+    def __init__(self,v,left=None,right=None): self.v,self.left,self.right=v,left,right
+def bst_insert(root,v):
+    if not root: return BSTNode(v)
+    if v<root.v: root.left=bst_insert(root.left,v)
+    else: root.right=bst_insert(root.right,v)
+    return root
+def bst_search(root,v):
+    if not root: return False
+    if root.v==v: return True
+    return bst_search(root.left,v) if v<root.v else bst_search(root.right,v)
+# test
+r=None
+for x in [5,3,7,2,4]: r=bst_insert(r,x)
+print(bst_search(r,4), bst_search(r,6))

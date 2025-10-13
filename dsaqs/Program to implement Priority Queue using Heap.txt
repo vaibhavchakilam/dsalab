@@ -1,0 +1,14 @@
+import heapq
+
+# Create an empty priority queue (min-heap)
+pq = []
+
+# Insert (priority, value)
+heapq.heappush(pq, (3, 'C'))
+heapq.heappush(pq, (1, 'A'))
+heapq.heappush(pq, (2, 'B'))
+
+# Remove elements in order of priority
+while pq:
+    priority, value = heapq.heappop(pq)
+    print(priority, value)

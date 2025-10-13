@@ -1,0 +1,11 @@
+# 8
+class N: 
+    def __init__(self,v,next=None): self.v,self.next=v,next
+class LLStack:
+    def __init__(self): self.head=None
+    def push(self,v): self.head=N(v,self.head)
+    def pop(self):
+        if not self.head: return None
+        v=self.head.v; self.head=self.head.next; return v
+# test
+s=LLStack(); s.push(5); s.push(6); print(s.pop(), s.pop())

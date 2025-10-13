@@ -1,0 +1,42 @@
+#25
+class BNode:
+    def __init__(self,leaf=True): self.keys=[]; self.child=[]; self.leaf=leaf
+class BTree:
+    def __init__(self,t=2): self.t=t; self.root=BNode()
+    def search(self,k,node=None):
+        node=node or self.root
+        i=0
+        while i<len(node.keys) and k>node.keys[i]: i+=1
+        if i<len(node.keys) and node.keys[i]==k: return True
+        if node.leaf: return False
+        return self.search(k,node.child[i])
+    def split_child(self,parent,i):
+        t=self.t; y=parent.child[i]; z=BNode(y.leaf)
+        mid=y.keys[t-1]
+        z.keys=y.keys[t:]; y.keys=y.keys[:t-1]
+        if not y.leaf:
+            z.child=y.child[t:]; y.child=y.child[:t]
+        parent.child.insert(i+1,z); parent.keys.insert(i,mid)
+    def insert(self,k):
+        r=self.root
+        if len(r.keys)==2*self.t-1:
+            s=BNode(False); s.child=[r]; self.root=s; self.split_child(s,0); self._insert_nonfull(s,k)
+        else: self._insert_nonfull(r,k)
+    def _insert_nonfull(self,node,k):
+        i=len(node.keys)-1
+        if node.leaf:
+            node.keys.append(None)
+            while i>=0 and k<node.keys[i]: node.keys[i+1]=node.keys[i]; i-=1
+            node.keys[i+1]=k
+        else:
+            while i>=0 and k<node.keys[i]: i-=1
+            i+=1
+            if len(node.child[i].keys)==2*self.t-1:
+                self.split_child(node,i)
+                if k>node.keys[i]: i+=1
+            self._insert_nonfull(node.child[i],k)
+
+# test
+bt=BTree()
+for x in [10,20,5,6,12,30,7,17]: bt.insert(x)
+print(bt.search(6), bt.search(15))

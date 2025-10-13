@@ -1,0 +1,13 @@
+#20
+class Schain:
+    def __init__(self,m=8): self.m=m; self.b=[[] for _ in range(m)]
+    def _h(self,k): return hash(k)%self.m
+    def put(self,k,v):
+        for i,(kk,_) in enumerate(self.b[self._h(k)]):
+            if kk==k: self.b[self._h(k)][i]=(k,v); return
+        self.b[self._h(k)].append((k,v))
+    def get(self,k):
+        for kk,v in self.b[self._h(k)]: 
+            if kk==k: return v
+        return None
+ht=Schain(); ht.put('a',1); print(ht.get('a'))

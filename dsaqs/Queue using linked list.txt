@@ -1,0 +1,16 @@
+#13
+class QNode:
+    def __init__(self,v): self.v,self.next=v,None
+class LLQueue:
+    def __init__(self): self.head=self.tail=None
+    def enqueue(self,v):
+        n=QNode(v)
+        if not self.tail: self.head=self.tail=n
+        else: self.tail.next=n; self.tail=n
+    def dequeue(self):
+        if not self.head: return None
+        v=self.head.v; self.head=self.head.next
+        if not self.head: self.tail=None
+        return v
+# test
+qq=LLQueue(); qq.enqueue(1); qq.enqueue(2); print(qq.dequeue(), qq.dequeue())

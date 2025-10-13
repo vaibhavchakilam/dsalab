@@ -1,0 +1,17 @@
+# 9
+def infix_to_postfix(s):
+    prec={'+':1,'-':1,'*':2,'/':2,'^':3}
+    op=[]; out=[]
+    for tok in s.split():
+        if tok.isalnum(): out.append(tok)
+        elif tok=='(': op.append(tok)
+        elif tok==')':
+            while op and op[-1]!='(': out.append(op.pop())
+            op.pop()
+        else:
+            while op and op[-1]!='(' and (prec.get(op[-1],0)>=prec.get(tok,0)): out.append(op.pop())
+            op.append(tok)
+    while op: out.append(op.pop())
+    return ' '.join(out)
+# test
+print(infix_to_postfix("a + b * ( c - d )"))

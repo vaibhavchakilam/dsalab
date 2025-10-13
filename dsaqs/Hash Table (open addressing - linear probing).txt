@@ -1,0 +1,23 @@
+#21
+class OAHash:
+    def __init__(self,m=8):
+        self.m=m; self.k=[None]*m; self.v=[None]*m
+    def _h(self,x,i): return (hash(x)+i)%self.m
+    def put(self,key,val):
+        for i in range(self.m):
+            j=self._h(key,i)
+            if self.k[j] in (None, 'DEL', key):
+                self.k[j]=key; self.v[j]=val; return
+        raise Exception("Full")
+    def get(self,key):
+        for i in range(self.m):
+            j=self._h(key,i)
+            if self.k[j] is None: return None
+            if self.k[j]==key: return self.v[j]
+        return None
+    def delete(self,key):
+        for i in range(self.m):
+            j=self._h(key,i)
+            if self.k[j]==key: self.k[j]='DEL'; self.v[j]=None; return
+# test
+o=OAHash(); o.put('x',10); print(o.get('x')); o.delete('x'); print(o.get('x'))

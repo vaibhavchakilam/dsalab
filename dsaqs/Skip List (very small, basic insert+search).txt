@@ -1,0 +1,38 @@
+#28
+import random
+class SKNode:
+    def __init__(self,k=None,level=0): self.k=k; self.next=[None]*(level+1)
+class SkipList:
+    def __init__(self,MAX=16,p=0.5):
+        self.MAX,self.p=MAX,p; self.head=SKNode(None,MAX)
+        self.level=0
+    def rand_level(self):
+        lvl=0
+        while random.random()<self.p and lvl<self.MAX: lvl+=1
+        return lvl
+    def search(self,k):
+        x=self.head
+        for i in range(self.level,-1,-1):
+            while x.next[i] and x.next[i].k<k: x=x.next[i]
+        x=x.next[0]
+        return x and x.k==k
+    def insert(self,k):
+        update=[None]*(self.MAX+1); x=self.head
+        for i in range(self.level,-1,-1):
+            while x.next[i] and x.next[i].k<k: x=x.next[i]
+            update[i]=x
+        x=x.next[0]
+        if x and x.k==k: return
+        lvl=self.rand_level()
+        if lvl>self.level:
+            for i in range(self.level+1,lvl+1): update[i]=self.head
+            self.level=lvl
+        n=SKNode(k,lvl)
+        for i in range(lvl+1):
+            n.next[i]=update[i].next[i]
+            update[i].next[i]=n
+
+# test
+sl=SkipList()
+for v in [3,6,7,9,12]: sl.insert(v)
+print(sl.search(7), sl.search(5))

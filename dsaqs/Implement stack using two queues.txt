@@ -1,0 +1,11 @@
+#26
+from collections import deque
+class Stack2Q:
+    def __init__(self): self.q1=deque(); self.q2=deque()
+    def push(self,x):
+        self.q2.append(x)
+        while self.q1: self.q2.append(self.q1.popleft())
+        self.q1,self.q2=self.q2,self.q1
+    def pop(self): return self.q1.popleft() if self.q1 else None
+# test
+s=Stack2Q(); s.push(1); s.push(2); print(s.pop(), s.pop())

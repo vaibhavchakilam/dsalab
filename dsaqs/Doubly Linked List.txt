@@ -1,0 +1,22 @@
+# 5
+class DNode:
+    def __init__(self,v): self.v,self.prev,self.next=v,None,None
+class DLL:
+    def __init__(self): self.head=None
+    def insert_front(self,v):
+        n=DNode(v); n.next=self.head
+        if self.head: self.head.prev=n
+        self.head=n
+    def delete(self,v):
+        cur=self.head
+        while cur and cur.v!=v: cur=cur.next
+        if not cur: return
+        if cur.prev: cur.prev.next=cur.next
+        else: self.head=cur.next
+        if cur.next: cur.next.prev=cur.prev
+    def traverse(self):
+        cur=self.head
+        while cur: print(cur.v); cur=cur.next
+
+# test
+d=DLL(); d.insert_front(1); d.insert_front(2); d.insert_front(3); d.traverse(); d.delete(2); d.traverse()

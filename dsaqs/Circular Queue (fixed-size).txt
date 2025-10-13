@@ -1,0 +1,12 @@
+#12
+class CircQueue:
+    def __init__(self,k):
+        self.a=[None]*k; self.n=k; self.h=self.t=0; self.sz=0
+    def enqueue(self,x):
+        if self.sz==self.n: return False
+        self.a[self.t]=x; self.t=(self.t+1)%self.n; self.sz+=1; return True
+    def dequeue(self):
+        if self.sz==0: return None
+        v=self.a[self.h]; self.h=(self.h+1)%self.n; self.sz-=1; return v
+# test
+cq=CircQueue(3); cq.enqueue(1); cq.enqueue(2); print(cq.dequeue(), cq.dequeue())

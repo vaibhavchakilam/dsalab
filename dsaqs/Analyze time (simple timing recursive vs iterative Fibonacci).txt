@@ -1,0 +1,13 @@
+# 2
+import time
+def fib_iter(n):
+    a,b=0,1
+    for _ in range(n): a,b=b,a+b
+    return a
+
+def timeit(fn,n):
+    t=time.time(); fn(n); return time.time()-t
+
+for n in (20,25,30):
+    print("n",n,"rec",timeit(fib_rec,n),"iter",timeit(fib_iter,n))
+

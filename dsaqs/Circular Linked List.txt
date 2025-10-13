@@ -1,0 +1,20 @@
+# 6
+class CNode:
+    def __init__(self,v): self.v,self.next=v,self
+class CLL:
+    def __init__(self): self.tail=None
+    def insert(self,v):
+        n=CNode(v)
+        if not self.tail: self.tail=n
+        else:
+            n.next=self.tail.next; self.tail.next=n; self.tail=n
+    def traverse(self):
+        if not self.tail: return
+        cur=self.tail.next
+        while True:
+            print(cur.v)
+            cur=cur.next
+            if cur==self.tail.next: break
+
+# test
+c=CLL(); c.insert(1); c.insert(2); c.insert(3); c.traverse()

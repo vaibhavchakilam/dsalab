@@ -1,0 +1,6 @@
+# 3
+arr=[1,2,3]
+arr.insert(1,9)       # insert
+arr.pop(2)            # delete index
+print("search", 9 in arr)
+for x in arr: print(x)

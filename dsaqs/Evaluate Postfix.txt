@@ -1,0 +1,11 @@
+#10
+def eval_postfix(s):
+    st=[]
+    for tok in s.split():
+        if tok.isdigit(): st.append(int(tok))
+        else:
+            b,a=st.pop(),st.pop()
+            st.append({'+' : a+b, '-' : a-b, '*' : a*b, '/' : a//b}[tok])
+    return st[0]
+# test
+print(eval_postfix("3 4 + 2 * 7 /"))

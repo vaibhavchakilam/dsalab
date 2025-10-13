@@ -1,0 +1,24 @@
+# 4
+class Node: 
+    def __init__(self,v,next=None): self.v,self.next=v,next
+class SLL:
+    def __init__(self): self.head=None
+    def insert(self,v): self.head=Node(v,self.head)
+    def delete(self,v):
+        cur,prev=self.head,None
+        while cur and cur.v!=v: prev,cur=cur,cur.next
+        if cur:
+            if prev: prev.next=cur.next
+            else: self.head=cur.next
+    def search(self,v):
+        cur=self.head
+        while cur:
+            if cur.v==v: return True
+            cur=cur.next
+        return False
+    def traverse(self):
+        cur=self.head
+        while cur: print(cur.v); cur=cur.next
+
+# test
+L=SLL(); L.insert(1); L.insert(2); L.insert(3); L.traverse(); print(L.search(2)); L.delete(2); L.traverse()
