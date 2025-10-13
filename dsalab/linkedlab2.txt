@@ -1,0 +1,273 @@
+Singly Linked List – Insert at Front and End
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class SinglyLinkedList:
+    def __init__(self):
+        self.head = None
+
+    def insert_front(self, data):
+        new_node = Node(data)
+        new_node.next = self.head
+        self.head = new_node
+
+    def insert_end(self, data):
+        new_node = Node(data)
+        if self.head is None:
+            self.head = new_node
+            return
+        temp = self.head
+        while temp.next:
+            temp = temp.next
+        temp.next = new_node
+
+    def traverse(self):
+        temp = self.head
+        while temp:
+            print(temp.data, end=" -> ")
+            temp = temp.next
+        print("None")
+
+
+# --- Test the linked list ---
+ll = SinglyLinkedList()
+ll.insert_front(10)
+ll.insert_end(20)
+ll.insert_end(30)
+print("Linked List after insertions:")
+ll.traverse()
+  
+--------------------------------------------------------------------------------------------------
+Singly Linked List – Delete at Front and Traverse
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class SinglyLinkedList:
+    def __init__(self):
+        self.head = None
+
+    def insert_end(self, data):
+        new_node = Node(data)
+        if self.head is None:
+            self.head = new_node
+            return
+        temp = self.head
+        while temp.next:
+            temp = temp.next
+        temp.next = new_node
+
+    def delete_front(self):
+        if self.head is None:
+            print("List is empty.")
+        else:
+            print(f"Deleted: {self.head.data}")
+            self.head = self.head.next
+
+    def traverse(self):
+        temp = self.head
+        while temp:
+            print(temp.data, end=" -> ")
+            temp = temp.next
+        print("None")
+
+
+# --- Test the linked list ---
+ll = SinglyLinkedList()
+ll.insert_end(10)
+ll.insert_end(20)
+ll.insert_end(30)
+print("Before deletion:")
+ll.traverse()
+
+ll.delete_front()
+print("After deletion:")
+ll.traverse()
+
+--------------------------------------------------------------------------------------------------Stack using Linked List – Push, Pop, Peek, and IsEmpty
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class Stack:
+    def __init__(self):
+        self.top = None
+
+    def is_empty(self):
+        return self.top is None
+
+    def push(self, data):
+        new_node = Node(data)
+        new_node.next = self.top
+        self.top = new_node
+        print(f"Pushed: {data}")
+
+    def pop(self):
+        if self.is_empty():
+            print("Stack Underflow! Cannot pop.")
+            return
+        popped = self.top.data
+        self.top = self.top.next
+        print(f"Popped: {popped}")
+
+    def peek(self):
+        if self.is_empty():
+            print("Stack is empty.")
+        else:
+            print(f"Top element: {self.top.data}")
+
+    def display(self):
+        temp = self.top
+        print("Stack (Top -> Bottom):", end=" ")
+        while temp:
+            print(temp.data, end=" ")
+            temp = temp.next
+        print()
+
+
+# --- Test the stack ---
+stack = Stack()
+stack.push(5)
+stack.push(10)
+stack.display()
+
+stack.pop()
+stack.peek()
+stack.display()
+---------------------------------------------------------------
+class CircularLinkedList:
+    def __init__(self):
+        self.head = None
+
+    # Insert at the end
+    def append(self, data):
+        new_node = Node(data)
+        if not self.head:
+            self.head = new_node
+            new_node.next = self.head
+            return
+        curr = self.head
+        while curr.next != self.head:
+            curr = curr.next
+        curr.next = new_node
+        new_node.next = self.head
+
+    # Insert at the beginning
+    def prepend(self, data):
+        new_node = Node(data)
+        if not self.head:
+            self.head = new_node
+            new_node.next = self.head
+            return
+        curr = self.head
+        while curr.next != self.head:
+            curr = curr.next
+        new_node.next = self.head
+        self.head = new_node
+        curr.next = self.head
+
+    # Delete a node by value
+    def delete(self, key):
+        if not self.head:
+            return
+        curr = self.head
+        prev = None
+        while True:
+            if curr.data == key:
+                if prev:
+                    prev.next = curr.next
+                else:
+                    # deleting head node
+                    tail = self.head
+                    while tail.next != self.head:
+                        tail = tail.next
+                    if tail == self.head:  # only one node
+                        self.head = None
+                        return
+                    tail.next = curr.next
+                    self.head = curr.next
+                return
+            prev = curr
+            curr = curr.next
+            if curr == self.head:
+                break  # node not found
+
+    # Display the list
+    def display(self):
+        if not self.head:
+            print("List is empty")
+            return
+        curr = self.head
+        while True:
+            print(curr.data, end=" -> ")
+            curr = curr.next
+            if curr == self.head:
+                break
+        print("(head)")
+--------------------------------------------------------------------------------------
+class DoublyLinkedList:
+    def __init__(self):
+        self.head = None
+
+    # Insert at the end
+    def append(self, data):
+        new_node = Node(data)
+        if self.head is None:
+            self.head = new_node
+            return
+        curr = self.head
+        while curr.next:
+            curr = curr.next
+        curr.next = new_node
+        new_node.prev = curr
+
+    # Insert at the beginning
+    def prepend(self, data):
+        new_node = Node(data)
+        if self.head is None:
+            self.head = new_node
+            return
+        new_node.next = self.head
+        self.head.prev = new_node
+        self.head = new_node
+
+    # Delete a node by value
+    def delete(self, key):
+        curr = self.head
+        while curr:
+            if curr.data == key:
+                if curr.prev:
+                    curr.prev.next = curr.next
+                else:
+                    self.head = curr.next
+                if curr.next:
+                    curr.next.prev = curr.prev
+                return
+            curr = curr.next
+
+    # Traverse forward
+    def display_forward(self):
+        curr = self.head
+        while curr:
+            print(curr.data, end=" <-> " if curr.next else "")
+            curr = curr.next
+        print()
+
+    # Traverse backward
+    def display_backward(self):
+        curr = self.head
+        if not curr:
+            return
+        while curr.next:
+            curr = curr.next
+        while curr:
+            print(curr.data, end=" <-> " if curr.prev else "")
+            curr = curr.prev
+        print()
+
+

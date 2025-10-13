@@ -1,0 +1,116 @@
+LAB 5 (Week 5): Binary Search Tree and Traversals
+ Binary Tree – Inorder Traversal
+# Binary Tree with Inorder Traversal
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+
+def inorder_traversal(root):
+    if root:
+        inorder_traversal(root.left)
+        print(root.data, end=" ")
+        inorder_traversal(root.right)
+
+
+# --- Test Binary Tree ---
+root = Node(1)
+root.left = Node(2)
+root.right = Node(3)
+root.left.left = Node(4)
+root.left.right = Node(5)
+
+print("Inorder Traversal of Binary Tree:")
+inorder_traversal(root)
+print()
+==================================================================================================
+Binary Search Tree (BST) – Insert, Search, Delete, Inorder
+# Binary Search Tree Implementation
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+
+class BST:
+    def __init__(self):
+        self.root = None
+
+    # Insert
+    def insert(self, root, key):
+        if root is None:
+            return Node(key)
+        if key < root.data:
+            root.left = self.insert(root.left, key)
+        else:
+            root.right = self.insert(root.right, key)
+        return root
+
+    # Search
+    def search(self, root, key):
+        if root is None or root.data == key:
+            return root
+        if key < root.data:
+            return self.search(root.left, key)
+        return self.search(root.right, key)
+
+    # Delete (handles leaf and one-child cases)
+    def delete(self, root, key):
+        if root is None:
+            return root
+        if key < root.data:
+            root.left = self.delete(root.left, key)
+        elif key > root.data:
+            root.right = self.delete(root.right, key)
+        else:
+            # Node with one or no child
+            if root.left is None:
+                return root.right
+            elif root.right is None:
+                return root.left
+
+            # Node with two children → find inorder successor
+            temp = self.min_value_node(root.right)
+            root.data = temp.data
+            root.right = self.delete(root.right, temp.data)
+        return root
+
+    def min_value_node(self, node):
+        current = node
+        while current.left is not None:
+            current = current.left
+        return current
+
+    # Inorder Traversal
+    def inorder(self, root):
+        if root:
+            self.inorder(root.left)
+            print(root.data, end=" ")
+            self.inorder(root.right)
+
+
+# --- Test the BST ---
+bst = BST()
+root = None
+
+# Insert elements
+for val in [50, 20, 70]:
+    root = bst.insert(root, val)
+
+# Search
+if bst.search(root, 20):
+    print("Element 20 found in BST")
+else:
+    print("Element 20 not found")
+
+# Delete
+root = bst.delete(root, 20)
+print("BST after deleting 20 (Inorder Traversal):")
+bst.inorder(root)
+print()
+=================================================================================================

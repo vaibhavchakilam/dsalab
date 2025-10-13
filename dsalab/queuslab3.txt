@@ -1,0 +1,110 @@
+Array-Based Queue Using a List
+ Operations: enqueue, dequeue, and front
+# Array-based Queue Implementation
+
+class Queue:
+    def __init__(self):
+        self.queue = []
+
+    # Enqueue operation
+    def enqueue(self, item):
+        self.queue.append(item)
+        print(f"Enqueued: {item}")
+
+    # Dequeue operation
+    def dequeue(self):
+        if len(self.queue) == 0:
+            print("Queue Underflow! Cannot dequeue.")
+            return
+        removed = self.queue.pop(0)
+        print(f"Dequeued: {removed}")
+
+    # Front operation
+    def front(self):
+        if len(self.queue) == 0:
+            print("Queue is empty.")
+        else:
+            print(f"Front element: {self.queue[0]}")
+
+    # Display
+    def display(self):
+        print("Queue:", self.queue)
+
+
+# --- Test the Queue ---
+q = Queue()
+q.enqueue(10)
+q.enqueue(20)
+q.enqueue(30)
+q.display()
+
+q.dequeue()
+q.dequeue()
+q.display()
+
+q.front()
+
+--------------------------------------------------------------------------------------------------
+Circular Queue (List-Based with Wrap-Around)
+ Operations: enqueue, dequeue, and proper circular wrap handling
+Test: enqueue(10, 20, 30), dequeue twice, enqueue(5)
+# Circular Queue Implementation
+
+class CircularQueue:
+    def __init__(self, size):
+        self.size = size
+        self.queue = [None] * size
+        self.front = self.rear = -1
+
+    def enqueue(self, item):
+        # Check if queue is full
+        if (self.rear + 1) % self.size == self.front:
+            print("Queue is full! Cannot enqueue.")
+            return
+        # First element
+        if self.front == -1:
+            self.front = 0
+        self.rear = (self.rear + 1) % self.size
+        self.queue[self.rear] = item
+        print(f"Enqueued: {item}")
+
+    def dequeue(self):
+        if self.front == -1:
+            print("Queue is empty! Cannot dequeue.")
+            return
+        removed = self.queue[self.front]
+        # Only one element
+        if self.front == self.rear:
+            self.front = self.rear = -1
+        else:
+            self.front = (self.front + 1) % self.size
+        print(f"Dequeued: {removed}")
+
+    def display(self):
+        if self.front == -1:
+            print("Queue is empty.")
+            return
+        print("Circular Queue:", end=" ")
+        i = self.front
+        while True:
+            print(self.queue[i], end=" ")
+            if i == self.rear:
+                break
+            i = (i + 1) % self.size
+        print()
+
+
+# --- Test the Circular Queue ---
+cq = CircularQueue(5)
+cq.enqueue(10)
+cq.enqueue(20)
+cq.enqueue(30)
+cq.display()
+
+cq.dequeue()
+cq.dequeue()
+cq.display()
+
+cq.enqueue(5)
+cq.display()
+=================================================================================================

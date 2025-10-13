@@ -1,0 +1,165 @@
+# B-Tree implementation in Python (Order = 3)
+
+class BTreeNode:
+    def __init__(self, leaf=False):
+        self.leaf = leaf
+        self.keys = []
+        self.children = []
+
+class BTree:
+    def __init__(self, t):
+        self.root = BTreeNode(True)
+        self.t = t  # Minimum degree
+
+    def search(self, k, x=None):
+        if x is None:
+            x = self.root
+        i = 0
+        while i < len(x.keys) and k > x.keys[i]:
+            i += 1
+        if i < len(x.keys) and k == x.keys[i]:
+            return True
+        elif x.leaf:
+            return False
+        else:
+            return self.search(k, x.children[i])
+
+    def insert(self, k):
+        root = self.root
+        if len(root.keys) == (2 * self.t) - 1:
+            temp = BTreeNode()
+            self.root = temp
+            temp.children.insert(0, root)
+            self._split_child(temp, 0)
+            self._insert_non_full(temp, k)
+        else:
+            self._insert_non_full(root, k)
+
+    def _insert_non_full(self, x, k):
+        i = len(x.keys) - 1
+        if x.leaf:
+            x.keys.append(0)
+            while i >= 0 and k < x.keys[i]:
+                x.keys[i + 1] = x.keys[i]
+                i -= 1
+            x.keys[i + 1] = k
+        else:
+            while i >= 0 and k < x.keys[i]:
+                i -= 1
+            i += 1
+            if len(x.children[i].keys) == (2 * self.t) - 1:
+                self._split_child(x, i)
+                if k > x.keys[i]:
+                    i += 1
+            self._insert_non_full(x.children[i], k)
+
+    def _split_child(self, x, i):
+        t = self.t
+        y = x.children[i]
+        z = BTreeNode(y.leaf)
+        x.children.insert(i + 1, z)
+        x.keys.insert(i, y.keys[t - 1])
+        z.keys = y.keys[t:(2 * t - 1)]
+        y.keys = y.keys[0:t - 1]
+        if not y.leaf:
+            z.children = y.children[t:(2 * t)]
+            y.children = y.children[0:t - 1]
+
+    def print_tree(self, x=None, l=0):
+        if x is None:
+            x = self.root
+        print("Level", l, "Keys:", x.keys)
+        l += 1
+        if len(x.children) > 0:
+            for child in x.children:
+                self.print_tree(child, l)
+==================================================================================================
+# Testing B-tree (Order = 3)
+# Includes full class definitions for independent execution
+
+class BTreeNode:
+    def __init__(self, leaf=False):
+        self.leaf = leaf
+        self.keys = []
+        self.children = []
+
+class BTree:
+    def __init__(self, t):
+        self.root = BTreeNode(True)
+        self.t = t
+
+    def search(self, k, x=None):
+        if x is None:
+            x = self.root
+        i = 0
+        while i < len(x.keys) and k > x.keys[i]:
+            i += 1
+        if i < len(x.keys) and k == x.keys[i]:
+            return True
+        elif x.leaf:
+            return False
+        else:
+            return self.search(k, x.children[i])
+
+    def insert(self, k):
+        root = self.root
+        if len(root.keys) == (2 * self.t) - 1:
+            temp = BTreeNode()
+            self.root = temp
+            temp.children.insert(0, root)
+            self._split_child(temp, 0)
+            self._insert_non_full(temp, k)
+        else:
+            self._insert_non_full(root, k)
+
+    def _insert_non_full(self, x, k):
+        i = len(x.keys) - 1
+        if x.leaf:
+            x.keys.append(0)
+            while i >= 0 and k < x.keys[i]:
+                x.keys[i + 1] = x.keys[i]
+                i -= 1
+            x.keys[i + 1] = k
+        else:
+            while i >= 0 and k < x.keys[i]:
+                i -= 1
+            i += 1
+            if len(x.children[i].keys) == (2 * self.t) - 1:
+                self._split_child(x, i)
+                if k > x.keys[i]:
+                    i += 1
+            self._insert_non_full(x.children[i], k)
+
+    def _split_child(self, x, i):
+        t = self.t
+        y = x.children[i]
+        z = BTreeNode(y.leaf)
+        x.children.insert(i + 1, z)
+        x.keys.insert(i, y.keys[t - 1])
+        z.keys = y.keys[t:(2 * t - 1)]
+        y.keys = y.keys[0:t - 1]
+        if not y.leaf:
+            z.children = y.children[t:(2 * t)]
+            y.children = y.children[0:t - 1]
+
+    def print_tree(self, x=None, l=0):
+        if x is None:
+            x = self.root
+        print("Level", l, "Keys:", x.keys)
+        l += 1
+        if len(x.children) > 0:
+            for child in x.children:
+                self.print_tree(child, l)
+
+
+# --- Testing Part ---
+B = BTree(2)  # order = 3, t = 2
+values = [10, 20, 5, 6, 12, 30]
+for val in values:
+    B.insert(val)
+
+B.print_tree()
+
+key = 6
+found = B.search(key)
+print(f"\nSearch for {key}: {'Found' if found else 'Not Found'}")

@@ -1,0 +1,85 @@
+# Access and print array elements
+arr = [10, 20, 30, 40, 50]
+
+print("Array elements:")
+for i in arr:
+    print(i)
+
+# Print matrix values
+matrix = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+
+print("Matrix values:")
+for row in matrix:
+    for value in row:
+        print(value, end=" ")
+    print()
+
+# Initialize and print 3D array
+array_3d = [
+    [
+        [1, 2],
+        [3, 4]
+    ],
+    [
+        [5, 6],
+        [7, 8]
+    ]
+]
+
+print("3D Array elements:")
+for layer in array_3d:
+    for row in layer:
+        for val in row:
+            print(val, end=" ")
+        print()
+    print()
+
+# Find sum of array elements (user input)
+n = int(input("Enter number of elements: "))
+arr = []
+
+for i in range(n):
+    num = int(input(f"Enter element {i+1}: "))
+    arr.append(num)
+
+print("Array:", arr)
+print("Sum of elements:", sum(arr))
+
+# Find max and min in a list
+numbers = [15, 8, 22, 4, 19, 30]
+
+print("List:", numbers)
+print("Maximum:", max(numbers))
+print("Minimum:", min(numbers))
+
+# Array operations
+arr = [10, 20, 30, 40]
+print("Initial array:", arr)
+
+# Traverse
+print("Traversing:")
+for i in arr:
+    print(i, end=" ")
+print()
+
+# Insertion
+arr.append(50)
+print("After insertion:", arr)
+
+# Deletion
+arr.remove(30)
+print("After deletion:", arr)
+
+# Search
+x = 40
+if x in arr:
+    print(f"Element {x} found at index {arr.index(x)}")
+else:
+    print(f"Element {x} not found")
+
+# Size
+print("Size of array:", len(arr))

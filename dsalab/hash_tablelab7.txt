@@ -1,0 +1,212 @@
+LAB 7: HASH TABLES AND COLLISION HANDLING
+🟩 1️⃣ Hash Table using Open Addressing (Linear Probing)
+# Hash Table using Open Addressing (Linear Probing)
+
+class HashTable:
+    def __init__(self, size):
+        self.size = size
+        self.table = [None] * size
+
+    # Hash Function
+    def hash_func(self, key):
+        return key % self.size
+
+    # Insert
+    def insert(self, key):
+        index = self.hash_func(key)
+        start = index
+        while self.table[index] is not None and self.table[index] != "DELETED":
+            index = (index + 1) % self.size
+            if index == start:
+                print("Hash table is full!")
+                return
+        self.table[index] = key
+        print(f"Inserted: {key} at index {index}")
+
+    # Search
+    def search(self, key):
+        index = self.hash_func(key)
+        start = index
+        while self.table[index] is not None:
+            if self.table[index] == key:
+                print(f"Key {key} found at index {index}")
+                return
+            index = (index + 1) % self.size
+            if index == start:
+                break
+        print(f"Key {key} not found!")
+
+    # Delete
+    def delete(self, key):
+        index = self.hash_func(key)
+        start = index
+        while self.table[index] is not None:
+            if self.table[index] == key:
+                self.table[index] = "DELETED"
+                print(f"Key {key} deleted from index {index}")
+                return
+            index = (index + 1) % self.size
+            if index == start:
+                break
+        print(f"Key {key} not found for deletion!")
+
+    def display(self):
+        print("Hash Table:", self.table)
+
+
+# --- Test the Hash Table ---
+keys = [12, 44, 13, 88, 23]
+h = HashTable(7)
+
+for k in keys:
+    h.insert(k)
+
+h.display()
+h.search(44)
+h.delete(13)
+h.display()
+
+------------------------------------------------------------------------------------------
+Collision Resolution Methods
+
+This program demonstrates Chaining, Linear Probing, Quadratic Probing, and Double Hashing — all separately.
+# Collision Resolution Methods Demonstration
+
+# 1️⃣ Separate Chaining
+class ChainingHashTable:
+    def __init__(self, size):
+        self.size = size
+        self.table = [[] for _ in range(size)]
+
+    def hash_func(self, key):
+        return key % self.size
+
+    def insert(self, key):
+        index = self.hash_func(key)
+        self.table[index].append(key)
+
+    def display(self):
+        print("Chaining Hash Table:")
+        for i in range(self.size):
+            print(i, ":", self.table[i])
+
+
+# 2️⃣ Linear Probing
+class LinearProbing:
+    def __init__(self, size):
+        self.size = size
+        self.table = [None] * size
+
+    def hash_func(self, key):
+        return key % self.size
+
+    def insert(self, key):
+        index = self.hash_func(key)
+        while self.table[index] is not None:
+            index = (index + 1) % self.size
+        self.table[index] = key
+
+    def display(self):
+        print("Linear Probing Table:", self.table)
+
+
+# 3️⃣ Quadratic Probing
+class QuadraticProbing:
+    def __init__(self, size):
+        self.size = size
+        self.table = [None] * size
+
+    def hash_func(self, key):
+        return key % self.size
+
+    def insert(self, key):
+        i = 0
+        index = self.hash_func(key)
+        while self.table[(index + i * i) % self.size] is not None:
+            i += 1
+        self.table[(index + i * i) % self.size] = key
+
+    def display(self):
+        print("Quadratic Probing Table:", self.table)
+
+
+# 4️⃣ Double Hashing
+class DoubleHashing:
+    def __init__(self, size):
+        self.size = size
+        self.table = [None] * size
+
+    def hash1(self, key): return key % self.size
+    def hash2(self, key): return 5 - (key % 5)
+
+    def insert(self, key):
+        index = self.hash1(key)
+        step = self.hash2(key)
+        while self.table[index] is not None:
+            index = (index + step) % self.size
+        self.table[index] = key
+
+    def display(self):
+        print("Double Hashing Table:", self.table)
+
+
+# --- Test all methods ---
+keys = [12, 44, 13, 88, 23]
+size = 7
+
+# Chaining
+chain = ChainingHashTable(size)
+for k in keys: chain.insert(k)
+chain.display()
+
+# Linear Probing
+lin = LinearProbing(size)
+for k in keys: lin.insert(k)
+lin.display()
+
+# Quadratic Probing
+quad = QuadraticProbing(size)
+for k in keys: quad.insert(k)
+quad.display()
+
+# Double Hashing
+dbl = DoubleHashing(size)
+for k in keys: dbl.insert(k)
+dbl.display()
+==========================================================================================
+3️⃣ Different Hash Functions (Division, Multiplication, Double Hashing, Rehashing)
+# Different Hash Functions Implementation
+
+class HashFunctions:
+    def __init__(self, size):
+        self.size = size
+
+    # Division Method
+    def division_hash(self, key):
+        return key % self.size
+
+    # Multiplication Method
+    def multiplication_hash(self, key):
+        A = 0.6180339887  # constant (0 < A < 1)
+        return int(self.size * ((key * A) % 1))
+
+    # Double Hashing (two hash functions)
+    def double_hash(self, key):
+        h1 = key % self.size
+        h2 = 7 - (key % 7)
+        return (h1 + h2) % self.size
+
+    # Simple Rehashing (linear)
+    def rehash(self, old_hash, step=1):
+        return (old_hash + step) % self.size
+
+
+# --- Test Hash Functions ---
+hf = HashFunctions(10)
+keys = [12, 44, 13, 88, 23]
+
+print("Key | Division | Multiplication | Double Hash | Rehash(from 3)")
+print("---------------------------------------------------------------")
+for k in keys:
+    print(f"{k:3} | {hf.division_hash(k):9} | {hf.multiplication_hash(k):14} | {hf.double_hash(k):11} | {hf.rehash(3)}")
+=============================================================================================
