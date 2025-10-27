@@ -1,0 +1,71 @@
+Plan for Lab
+List of Lab Programs for Data Structures and Algorithms Course
+Lab 1 (Week 1, 2 hrs): Array Operations
+ Objective: Implement array operations (CO1).
+ Tasks: 
+•	Write a Python program to: 
+o	Traverse a list and print all elements. 
+o	Insert an element at a given index (shift elements using list slicing). 
+o	Delete an element at a given index (remove and shift). 
+o	Search for an element using linear search (return index or -1). 
+o	Update an element at a given index.
+•	Test with input list [5, 3, 8, 1, 9]; insert 7 at index 2, delete index 1, search 8, update index 3 to 4.
+Lab 2 (Week 2, 2 hrs): Singly Linked List and Stack
+ Objective: Build linked lists and stack operations (CO1, CO2).
+ Tasks: 
+•	Implement a singly linked list in Python with a Node class (data, next) and methods: 
+o	Insert at front and end. 
+o	Delete at front and traverse.
+•	Implement a stack using a linked list with push, pop, peek, and is_empty. 
+•	Test linked list: insert [10, 20, 30], delete front. Test stack: push [5, 10], pop once, peek.
+Lab 3 (Week 3, 2 hrs): Queue Implementations
+ Objective: Implement queue variants (CO1).
+ Tasks: 
+•	Implement in Python: 
+o	Array-based queue using a list with enqueue, dequeue, and front. 
+o	Circular queue (list-based) handling wrap-around.
+•	Test with: enqueue [10, 20, 30], dequeue twice, enqueue 5 in circular queue.
+Lab 4 (Week 4, 2 hrs): Sorting Algorithms
+ Objective: Implement and compare sorting algorithms (CO2).
+ Tasks: 
+•	Implement insertion sort and merge sort in Python. 
+•	Compare performance using time module on a random list of 50 integers. 
+•	Test with input: [64, 34, 25, 5, 22].
+Lab 5 (Week 5, 2 hrs): Binary Search Tree and Traversals
+ Objective: Code tree traversals and BST operations (CO1, CO2).
+ Tasks: 
+•	Implement a binary tree in Python with a Node class and: 
+o	Inorder traversal.
+•	Implement a BST with insert, search, and delete (handle leaf and one-child cases). 
+•	Test with: insert [50, 20, 70], search 20, delete 20, print inorder traversal.
+Lab 6 (Week 6, 2 hrs): Heap and Priority Queue
+ Objective: Implement heap-based priority queues (CO2).
+ Tasks: 
+•	Implement a min-heap in Python using a list with: 
+o	Insert, extract-min, and heapify (use heapq optionally).
+•	Implement heapsort using min-heap. 
+•	Test with: [4, 30, 3, 25, 16, 9].
+Lab 7 (Week 7, 2 hrs): Hash Table Implementation
+ Objective: Code hash tables with collision handling (CO2).
+ Tasks: 
+•	Implement a hash table in Python with: 
+o	Open addressing (linear probing) using a list.
+•	Test with: insert keys [12, 44, 13, 88, 23], search 44, delete 13.
+Lab 8 (Week 8, 2 hrs): B-Tree Implementation
+ Objective: Implement B-trees for indexing (CO2).
+ Tasks: 
+•	Implement a B-tree in Python (order m=3) with: 
+o	Insert and search operations.
+•	Test with: insert [10, 20, 5, 6, 12, 30], search 6.
+Lab 9 (Week 9, 2 hrs): Graph Representation and Traversals
+ Objective: Implement graph representations and traversals (CO1, CO2).
+ Tasks: 
+•	Implement a graph in Python using an adjacency list (dictionary of lists). 
+•	Implement depth-first search (DFS) and breadth-first search (BFS). 
+•	Test with graph: nodes [A, B, C, D], edges [A-B, B-C, C-D, A-D].
+Lab 10 (Week 10, 2 hrs): Dijkstra’s and Bloom Filter
+ Objective: Implement shortest path algorithm and advanced data structure (CO2, CO4).
+ Tasks: 
+•	Implement Dijkstra’s algorithm in Python for shortest paths using heapq. 
+•	Implement a Bloom filter with multiple hash functions (hashlib) for membership testing. 
+•	Test Dijkstra’s with graph: nodes [A, B, C, D], edges [A-B:4, A-C:2, B-D:5, C-D:8]. Test Bloom filter with: insert [apple, banana], query [apple, orange].
